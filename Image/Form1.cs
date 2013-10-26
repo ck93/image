@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Image
 {
@@ -24,7 +25,7 @@ namespace Image
         int width = 512;
         int height = 512;
         const double pi = 3.1416;
-        
+        Stopwatch sw = new Stopwatch();
         int[,] R;
         int[,] G;
         int[,] B;
@@ -83,24 +84,25 @@ namespace Image
         }
         double[] rotate(int center_x, int center_y, int x, int y, int strengh, int scale, int limit)//变换后图像中某点对应原来图像中的位置
         {           
-            double[] site = new double[2];
+            double[] site = new double[2];            
             double r = Math.Sqrt((center_x - x) * (center_x - x) + (center_y - y) * (center_y - y));
-            double angle = Math.Atan2((double)(y - center_y), (double)(x - center_x));           
-            double delta = max(limit - (int)Math.Sqrt(11 - scale) * (int)r, 0) / (double)limit;
+            double angle = Math.Atan2((double)(y - center_y), (double)(x - center_x));            
+            double delta = max(limit - (int)(Math.Sqrt(48 - scale) * (int)r / 4), 0) / (double)limit;            
             if (switchButton1.Value == true)
                 angle -= strengh * Math.Pow(delta, 3) / 10;               
             else
                 angle += strengh * Math.Pow(delta, 3) / 10;               
             site[0] = center_x + r * Math.Cos(angle);
             site[1] = center_y + r * Math.Sin(angle);
+            
             return site;
         }
         int near(int[,] color, double[] site)
         {
+            
             int x = (int)(site[0] * 2 - (int)site[0]);
-            int y = (int)(site[1] * 2 - (int)site[1]);
+            int y = (int)(site[1] * 2 - (int)site[1]);            
             return color[x, y];
-            //return color[(int)site[0],(int)site[1]];
         }
         int Biliner(int[,] color, double[] site)
         {
@@ -108,7 +110,7 @@ namespace Image
             double y0 = site[1];
             int x = (int)x0;
             int y = (int)y0;
-            return (int)((x0 - x) * (y0 - y) * color[x,y] + (x0 - x) * (y + 1 - y0) * color[x,y+1]+ (x + 1 - x0) * (y0 - y) * color[x+1,y] + (x + 1 - x0) * (y + 1 - y0) * color[x+1,y+1]);
+            return (int)((x0 - x) * (y0 - y) * color[x+1,y+1] + (x0 - x) * (y + 1 - y0) * color[x+1,y]+ (x + 1 - x0) * (y0 - y) * color[x,y+1] + (x + 1 - x0) * (y + 1 - y0) * color[x,y]);
         }
         private void buttonX1_Click(object sender, EventArgs e)
         {
@@ -138,7 +140,7 @@ namespace Image
             }
         }
 
-        void twist(int x,int y)
+        Bitmap twist(int x, int y)
         {
             int strengh = slider1.Value;
             int scale = slider2.Value;
@@ -152,39 +154,52 @@ namespace Image
             int[,] newR = new int[height, width];
             int[,] newG = new int[height, width];
             int[,] newB = new int[height, width];
-            for (int i = 0; i < height; i++)
+            
+            switch (comboBoxEx1.SelectedIndex)
             {
-                for (int j = 0; j < width; j++)
-                {
-                    double[] site = rotate(x, y, i, j, strengh, scale, limit);
-                    if (site[0] > -0.5 && site[0] < width - 1.5 && site[1] > -0.5 && site[1] < height - 1.5)
-                    {                        
-                        switch (comboBoxEx1.SelectedIndex)
-                        {
-                            case 0:
+                case 0:
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                        {                    
+                            double[] site = rotate(x, y, i, j, strengh, scale, limit);                                      
+                            if (site[0] > -0.5 && site[0] < width - 1.5 && site[1] > -0.5 && site[1] < height - 1.5)
+                            {                                          
                                 newR[i, j] = near(R, site);
                                 newG[i, j] = near(G, site);
-                                newB[i, j] = near(B, site);
-                                break;
-                            case 1:
+                                newB[i, j] = near(B, site);                                                       
+                            }                       
+                            else
+                            {
+                                newR[i, j] = R[i, j];
+                                newG[i, j] = G[i, j];
+                                newB[i, j] = B[i, j];
+                            }
+                            
+                        }
+                    break;
+                case 1:
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                        {
+                            double[] site = rotate(x, y, i, j, strengh, scale, limit);
+                            if (site[0] > -0.5 && site[0] < width - 1.5 && site[1] > -0.5 && site[1] < height - 1.5)
+                            {
                                 newR[i, j] = Biliner(R, site);
                                 newG[i, j] = Biliner(G, site);
                                 newB[i, j] = Biliner(B, site);
-                                break;
-                        }
-                        
-                    }
-                    else
-                    {
-                        newR[i, j] = R[i, j];
-                        newG[i, j] = G[i, j];
-                        newB[i, j] = B[i, j];
-                    }
+                            }
+                            else
+                            {
+                                newR[i, j] = R[i, j];
+                                newG[i, j] = G[i, j];
+                                newB[i, j] = B[i, j];
+                            }
 
-                }
+                        }
+                    break;
             }
             Bitmap newpic = FromRGB(newR, newG, newB);
-            pictureBox1.Image = newpic;
+            return newpic;
         }
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
@@ -192,16 +207,20 @@ namespace Image
             int x = e.Y * height / 500;
             click_x = x;
             click_y = y;
+
+            pictureBox1.Image = twist(x, y);
+            //MessageBox.Show(sw.ElapsedMilliseconds.ToString());
+            //sw.Reset();
         }
 
         private void slider1_ValueChanged(object sender, EventArgs e)
         {
-            twist(click_x,click_y);
+            pictureBox1.Image = twist(click_x,click_y);
         }
 
         private void switchButton1_ValueChanged(object sender, EventArgs e)
         {
-            twist(click_x, click_y);
+            pictureBox1.Image = twist(click_x, click_y);
         }
 
         private void buttonX3_Click(object sender, EventArgs e)
@@ -212,7 +231,24 @@ namespace Image
 
         private void slider2_ValueChanged(object sender, EventArgs e)
         {
-            twist(click_x, click_y);
+            pictureBox1.Image = twist(click_x, click_y);
+        }
+
+        private void buttonX4_Click(object sender, EventArgs e)
+        {
+            int temp = comboBoxEx1.SelectedIndex;
+            comboBoxEx1.SelectedIndex = 0;
+            Bitmap near = twist(click_x, click_y);
+            near.Save("near.bmp");
+            comboBoxEx1.SelectedIndex = 1;
+            Bitmap bin = twist(click_x, click_y);
+            bin.Save("bin.bmp");
+            comboBoxEx1.SelectedIndex = temp;
+            Form2 f2 = new Form2();
+            f2.origin = checkBoxItem1.Checked;
+            f2.near = checkBoxItem2.Checked;
+            f2.bin = checkBoxItem3.Checked;
+            f2.ShowDialog();
         }
     }
 }

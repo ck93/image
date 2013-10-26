@@ -42,6 +42,10 @@
             this.comboItem1 = new DevComponents.Editors.ComboItem();
             this.label2 = new System.Windows.Forms.Label();
             this.slider2 = new DevComponents.DotNetBar.Controls.Slider();
+            this.buttonX4 = new DevComponents.DotNetBar.ButtonX();
+            this.checkBoxItem1 = new DevComponents.DotNetBar.CheckBoxItem();
+            this.checkBoxItem2 = new DevComponents.DotNetBar.CheckBoxItem();
+            this.checkBoxItem3 = new DevComponents.DotNetBar.CheckBoxItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,7 +67,7 @@
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX1.Location = new System.Drawing.Point(596, 30);
+            this.buttonX1.Location = new System.Drawing.Point(547, 30);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX1.Size = new System.Drawing.Size(82, 33);
@@ -82,7 +86,7 @@
             this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX2.Location = new System.Drawing.Point(596, 147);
+            this.buttonX2.Location = new System.Drawing.Point(649, 30);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX2.Size = new System.Drawing.Size(82, 33);
@@ -126,8 +130,9 @@
             this.switchButton1.Name = "switchButton1";
             this.switchButton1.OffText = "顺时针";
             this.switchButton1.OnText = "逆时针";
-            this.switchButton1.Size = new System.Drawing.Size(86, 30);
+            this.switchButton1.Size = new System.Drawing.Size(97, 30);
             this.switchButton1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.switchButton1.SwitchWidth = 35;
             this.switchButton1.TabIndex = 7;
             this.switchButton1.ValueChanged += new System.EventHandler(this.switchButton1_ValueChanged);
             // 
@@ -148,7 +153,7 @@
             this.buttonX3.BackColor = System.Drawing.Color.Transparent;
             this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX3.Location = new System.Drawing.Point(596, 88);
+            this.buttonX3.Location = new System.Drawing.Point(649, 90);
             this.buttonX3.Name = "buttonX3";
             this.buttonX3.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX3.Size = new System.Drawing.Size(82, 33);
@@ -170,7 +175,7 @@
             this.comboItem1});
             this.comboBoxEx1.Location = new System.Drawing.Point(625, 261);
             this.comboBoxEx1.Name = "comboBoxEx1";
-            this.comboBoxEx1.Size = new System.Drawing.Size(86, 23);
+            this.comboBoxEx1.Size = new System.Drawing.Size(97, 23);
             this.comboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.comboBoxEx1.TabIndex = 4;
             // 
@@ -187,7 +192,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(545, 261);
+            this.label2.Location = new System.Drawing.Point(543, 261);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(74, 21);
             this.label2.TabIndex = 8;
@@ -202,21 +207,63 @@
             this.slider2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.slider2.LabelWidth = 40;
             this.slider2.Location = new System.Drawing.Point(547, 370);
-            this.slider2.Maximum = 10;
+            this.slider2.Maximum = 40;
             this.slider2.Minimum = 1;
             this.slider2.Name = "slider2";
             this.slider2.Size = new System.Drawing.Size(160, 30);
             this.slider2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.slider2.TabIndex = 6;
             this.slider2.Text = "范围";
-            this.slider2.Value = 5;
+            this.slider2.Value = 20;
             this.slider2.ValueChanged += new System.EventHandler(this.slider2_ValueChanged);
+            // 
+            // buttonX4
+            // 
+            this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX4.BackColor = System.Drawing.Color.Transparent;
+            this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX4.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonX4.Location = new System.Drawing.Point(547, 90);
+            this.buttonX4.Name = "buttonX4";
+            this.buttonX4.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
+            this.buttonX4.Size = new System.Drawing.Size(82, 33);
+            this.buttonX4.SplitButton = true;
+            this.buttonX4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX4.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.checkBoxItem1,
+            this.checkBoxItem2,
+            this.checkBoxItem3});
+            this.buttonX4.TabIndex = 9;
+            this.buttonX4.Text = "对比";
+            this.buttonX4.Click += new System.EventHandler(this.buttonX4_Click);
+            // 
+            // checkBoxItem1
+            // 
+            this.checkBoxItem1.AutoCollapseOnClick = false;
+            this.checkBoxItem1.GlobalItem = false;
+            this.checkBoxItem1.Name = "checkBoxItem1";
+            this.checkBoxItem1.Text = "原图";
+            // 
+            // checkBoxItem2
+            // 
+            this.checkBoxItem2.AutoCollapseOnClick = false;
+            this.checkBoxItem2.GlobalItem = false;
+            this.checkBoxItem2.Name = "checkBoxItem2";
+            this.checkBoxItem2.Text = "最近邻插值";
+            // 
+            // checkBoxItem3
+            // 
+            this.checkBoxItem3.AutoCollapseOnClick = false;
+            this.checkBoxItem3.GlobalItem = false;
+            this.checkBoxItem3.Name = "checkBoxItem3";
+            this.checkBoxItem3.Text = "双线性插值";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 550);
+            this.ClientSize = new System.Drawing.Size(743, 550);
+            this.Controls.Add(this.buttonX4);
             this.Controls.Add(this.slider2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxEx1);
@@ -255,6 +302,10 @@
         private DevComponents.Editors.ComboItem comboItem1;
         private System.Windows.Forms.Label label2;
         private DevComponents.DotNetBar.Controls.Slider slider2;
+        private DevComponents.DotNetBar.ButtonX buttonX4;
+        private DevComponents.DotNetBar.CheckBoxItem checkBoxItem1;
+        private DevComponents.DotNetBar.CheckBoxItem checkBoxItem2;
+        private DevComponents.DotNetBar.CheckBoxItem checkBoxItem3;
     }
 }
 
