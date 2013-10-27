@@ -25,7 +25,7 @@ namespace Image
         Bitmap image;
         int width = 512;
         int height = 512;
-        const double pi = 3.1416;
+        const double PI = 3.1416;
         Stopwatch sw = new Stopwatch();
         int[,] R;
         int[,] G;
@@ -80,16 +80,12 @@ namespace Image
             Result.UnlockBits(bmpData);
             return Result;
         }
-        int max(int m, int n)
-        {
-            return (m > n ? m : n);
-        }
         double[] rotate(int center_x, int center_y, int x, int y, int strengh, int scale, int limit)//变换后图像中某点对应原来图像中的位置
         {           
             double[] site = new double[2];            
             double r = Math.Sqrt((center_x - x) * (center_x - x) + (center_y - y) * (center_y - y));
             double angle = Math.Atan2((double)(y - center_y), (double)(x - center_x));            
-            double delta = max(limit - (int)(Math.Sqrt(48 - scale) * (int)r / 4), 0) / (double)limit;            
+            double delta = Math.Max(limit - (int)(Math.Sqrt(48 - scale) * (int)r / 4), 0) / (double)limit;            
             if (switchButton1.Value == true)
                 angle -= strengh * Math.Pow(delta, 3) / 10;               
             else
@@ -174,7 +170,7 @@ namespace Image
             }
         }
 
-        Bitmap twist(int x, int y, int method, int strengh, int scale)
+        int getlimit(int x, int y)
         {
             int limit = x;
             if (width - x < limit)
@@ -183,6 +179,11 @@ namespace Image
                 limit = y;
             if (height - y < limit)
                 limit = height - y;
+            return limit;
+        }
+        Bitmap twist(int x, int y, int method, int strengh, int scale)
+        {
+            int limit = getlimit(x, y);
             int[,] newR = new int[height, width];
             int[,] newG = new int[height, width];
             int[,] newB = new int[height, width];
@@ -253,15 +254,117 @@ namespace Image
             Bitmap newpic = FromRGB(newR, newG, newB);
             return newpic;
         }
+        double[] Ripple(int center_x, int center_y, int x, int y, int limit, double amplitude, int wavelength) 
+        {  
+            double[] site = new double[2];
+            double dx = x - center_x;  
+            double dy = y - center_y;  
+            double r = Math.Sqrt(dx * dx + dy * dy);  
+            // 确定 water ripple的半径，如果在半径之外，就直接获取原来位置，不用计算迁移量  
+            if (r > limit - 2) 
+            {   
+                site[0] = x;  
+                site[1] = y;  
+            } 
+            else 
+            {   
+                // 计算该点振幅  
+                double amount = amplitude * Math.Sin(2 * PI * r / wavelength);
+                // 计算能量损失，   
+                amount *= (limit - r) / limit; 
+                //if (r != 0)  
+                //    amount *= wavelength / r;
+                // 得到water ripple 最终迁移位置  
+                site[0] = x + dx * amount;  
+                site[1] = y + dy * amount;  
+            }
+            return site;
+        }
+        Bitmap wave(int x, int y, int method, double amplitude, int wavelength)
+        {
+            int[,] newR = new int[height, width];
+            int[,] newG = new int[height, width];
+            int[,] newB = new int[height, width];
+            int limit = getlimit(x, y);
+            switch (method)
+            {
+                case 0:
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                        {
+                            double[] site = Ripple(x, y, i, j, limit, amplitude, wavelength);
+                            if (site[0] > -0.5 && site[0] < width - 0.5 && site[1] > -0.5 && site[1] < height - 0.5)
+                            {
+                                newR[i, j] = Nearest(R, site);
+                                newG[i, j] = Nearest(G, site);
+                                newB[i, j] = Nearest(B, site);
+                            }
+                            else
+                            {
+                                newR[i, j] = R[i, j];
+                                newG[i, j] = G[i, j];
+                                newB[i, j] = B[i, j];
+                            }
+
+                        }
+                    break;
+                case 1:
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                        {
+                            double[] site = Ripple(x, y, i, j, limit, amplitude, wavelength);
+                            if (site[0] > -0.5 && site[0] < width - 1.5 && site[1] > -0.5 && site[1] < height - 1.5)
+                            {
+                                newR[i, j] = Biliner(R, site);
+                                newG[i, j] = Biliner(G, site);
+                                newB[i, j] = Biliner(B, site);
+                            }
+                            else
+                            {
+                                newR[i, j] = R[i, j];
+                                newG[i, j] = G[i, j];
+                                newB[i, j] = B[i, j];
+                            }
+
+                        }
+                    break;
+                case 2:
+                    for (int i = 0; i < height; i++)
+                        for (int j = 0; j < width; j++)
+                        {
+                            double[] site = Ripple(x, y, i, j, limit, amplitude, wavelength);
+                            if (site[0] > 1 && site[0] < width - 2 && site[1] > 1 && site[1] < height - 2)
+                            {
+                                newR[i, j] = Bicubic(R, site);
+                                newG[i, j] = Bicubic(G, site);
+                                newB[i, j] = Bicubic(B, site);
+                            }
+                            else
+                            {
+                                newR[i, j] = R[i, j];
+                                newG[i, j] = G[i, j];
+                                newB[i, j] = B[i, j];
+                            }
+
+                        }
+                    break;
+            }
+            Bitmap newpic = FromRGB(newR, newG, newB);
+            return newpic;
+        }
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             int y = e.X * width / 500;
             int x = e.Y * height / 500;
             click_x = x;
             click_y = y;
-            pictureBox1.Image = twist(x, y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
+            if (superTabControl1.SelectedTab == superTabItem1)
+                pictureBox1.Image = twist(x, y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
+            else
+                pictureBox1.Image = wave(x, y, comboBoxEx1.SelectedIndex, slider3.Value, slider4.Value);
             //MessageBox.Show(sw.ElapsedMilliseconds.ToString());
             //sw.Reset();
+            
         }
 
         private void slider1_ValueChanged(object sender, EventArgs e)
@@ -351,8 +454,21 @@ namespace Image
 
         private void comboBoxEx1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
+            if (superTabControl1.SelectedTab == superTabItem1)
+                pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
+            else
+                pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, slider3.Value, slider4.Value);
             pictureBox1.Update();
+        }
+
+        private void slider3_ValueChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, slider3.Value, slider4.Value);
+        }
+
+        private void slider4_ValueChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, slider3.Value, slider4.Value);
         }
 
 
