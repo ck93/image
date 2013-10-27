@@ -28,25 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.slider1 = new DevComponents.DotNetBar.Controls.Slider();
-            this.switchButton1 = new DevComponents.DotNetBar.Controls.SwitchButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonX3 = new DevComponents.DotNetBar.ButtonX();
-            this.comboBoxEx1 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.comboItem0 = new DevComponents.Editors.ComboItem();
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
-            this.label2 = new System.Windows.Forms.Label();
-            this.slider2 = new DevComponents.DotNetBar.Controls.Slider();
             this.buttonX4 = new DevComponents.DotNetBar.ButtonX();
             this.checkBoxItem1 = new DevComponents.DotNetBar.CheckBoxItem();
             this.checkBoxItem2 = new DevComponents.DotNetBar.CheckBoxItem();
             this.checkBoxItem3 = new DevComponents.DotNetBar.CheckBoxItem();
+            this.checkBoxItem4 = new DevComponents.DotNetBar.CheckBoxItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
+            this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.comboBoxEx1 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
+            this.comboItem3 = new DevComponents.Editors.ComboItem();
+            this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
+            this.slider2 = new DevComponents.DotNetBar.Controls.Slider();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.switchButton1 = new DevComponents.DotNetBar.Controls.SwitchButton();
+            this.slider1 = new DevComponents.DotNetBar.Controls.Slider();
+            this.superTabItem1 = new DevComponents.DotNetBar.SuperTabItem();
+            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.superTabItem2 = new DevComponents.DotNetBar.SuperTabItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
+            this.superTabControl1.SuspendLayout();
+            this.superTabControlPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -67,7 +81,7 @@
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX1.Location = new System.Drawing.Point(547, 30);
+            this.buttonX1.Location = new System.Drawing.Point(555, 44);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX1.Size = new System.Drawing.Size(82, 33);
@@ -86,7 +100,7 @@
             this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX2.Location = new System.Drawing.Point(649, 30);
+            this.buttonX2.Location = new System.Drawing.Point(657, 44);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX2.Size = new System.Drawing.Size(82, 33);
@@ -100,60 +114,13 @@
             this.saveFileDialog1.DefaultExt = "bmp";
             this.saveFileDialog1.Filter = "BMP文件|*.bmp|JPEG文件|*.jpg";
             // 
-            // slider1
-            // 
-            // 
-            // 
-            // 
-            this.slider1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.slider1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.slider1.LabelWidth = 40;
-            this.slider1.Location = new System.Drawing.Point(547, 319);
-            this.slider1.Maximum = 40;
-            this.slider1.Minimum = 1;
-            this.slider1.Name = "slider1";
-            this.slider1.Size = new System.Drawing.Size(160, 30);
-            this.slider1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.slider1.TabIndex = 5;
-            this.slider1.Text = "强度";
-            this.slider1.Value = 20;
-            this.slider1.ValueChanged += new System.EventHandler(this.slider1_ValueChanged);
-            // 
-            // switchButton1
-            // 
-            // 
-            // 
-            // 
-            this.switchButton1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.switchButton1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.switchButton1.Location = new System.Drawing.Point(625, 207);
-            this.switchButton1.Name = "switchButton1";
-            this.switchButton1.OffText = "顺时针";
-            this.switchButton1.OnText = "逆时针";
-            this.switchButton1.Size = new System.Drawing.Size(97, 30);
-            this.switchButton1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.switchButton1.SwitchWidth = 35;
-            this.switchButton1.TabIndex = 7;
-            this.switchButton1.ValueChanged += new System.EventHandler(this.switchButton1_ValueChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(543, 212);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 21);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "旋转方向";
-            // 
             // buttonX3
             // 
             this.buttonX3.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX3.BackColor = System.Drawing.Color.Transparent;
             this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX3.Location = new System.Drawing.Point(649, 90);
+            this.buttonX3.Location = new System.Drawing.Point(657, 104);
             this.buttonX3.Name = "buttonX3";
             this.buttonX3.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX3.Size = new System.Drawing.Size(82, 33);
@@ -162,68 +129,13 @@
             this.buttonX3.Text = "还原";
             this.buttonX3.Click += new System.EventHandler(this.buttonX3_Click);
             // 
-            // comboBoxEx1
-            // 
-            this.comboBoxEx1.DisplayMember = "Text";
-            this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBoxEx1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxEx1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBoxEx1.FormattingEnabled = true;
-            this.comboBoxEx1.ItemHeight = 17;
-            this.comboBoxEx1.Items.AddRange(new object[] {
-            this.comboItem0,
-            this.comboItem1});
-            this.comboBoxEx1.Location = new System.Drawing.Point(625, 261);
-            this.comboBoxEx1.Name = "comboBoxEx1";
-            this.comboBoxEx1.Size = new System.Drawing.Size(97, 23);
-            this.comboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comboBoxEx1.TabIndex = 4;
-            // 
-            // comboItem0
-            // 
-            this.comboItem0.Text = "最近邻插值";
-            // 
-            // comboItem1
-            // 
-            this.comboItem1.Text = "双线性插值";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(543, 261);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 21);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "插值算法";
-            // 
-            // slider2
-            // 
-            // 
-            // 
-            // 
-            this.slider2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.slider2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.slider2.LabelWidth = 40;
-            this.slider2.Location = new System.Drawing.Point(547, 370);
-            this.slider2.Maximum = 40;
-            this.slider2.Minimum = 1;
-            this.slider2.Name = "slider2";
-            this.slider2.Size = new System.Drawing.Size(160, 30);
-            this.slider2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.slider2.TabIndex = 6;
-            this.slider2.Text = "范围";
-            this.slider2.Value = 20;
-            this.slider2.ValueChanged += new System.EventHandler(this.slider2_ValueChanged);
-            // 
             // buttonX4
             // 
             this.buttonX4.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX4.BackColor = System.Drawing.Color.Transparent;
             this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX4.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX4.Location = new System.Drawing.Point(547, 90);
+            this.buttonX4.Location = new System.Drawing.Point(555, 104);
             this.buttonX4.Name = "buttonX4";
             this.buttonX4.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX4.Size = new System.Drawing.Size(82, 33);
@@ -232,7 +144,8 @@
             this.buttonX4.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.checkBoxItem1,
             this.checkBoxItem2,
-            this.checkBoxItem3});
+            this.checkBoxItem3,
+            this.checkBoxItem4});
             this.buttonX4.TabIndex = 9;
             this.buttonX4.Text = "对比";
             this.buttonX4.Click += new System.EventHandler(this.buttonX4_Click);
@@ -258,19 +171,229 @@
             this.checkBoxItem3.Name = "checkBoxItem3";
             this.checkBoxItem3.Text = "双线性插值";
             // 
+            // checkBoxItem4
+            // 
+            this.checkBoxItem4.GlobalItem = false;
+            this.checkBoxItem4.Name = "checkBoxItem4";
+            this.checkBoxItem4.Text = "双三次样条插值";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 50;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // superTabControl1
+            // 
+            this.superTabControl1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.superTabControl1.ControlBox.CloseBox.Name = "";
+            // 
+            // 
+            // 
+            this.superTabControl1.ControlBox.MenuBox.Name = "";
+            this.superTabControl1.ControlBox.Name = "";
+            this.superTabControl1.ControlBox.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.superTabControl1.ControlBox.MenuBox,
+            this.superTabControl1.ControlBox.CloseBox});
+            this.superTabControl1.Controls.Add(this.superTabControlPanel2);
+            this.superTabControl1.Controls.Add(this.superTabControlPanel1);
+            this.superTabControl1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.superTabControl1.Location = new System.Drawing.Point(555, 196);
+            this.superTabControl1.Name = "superTabControl1";
+            this.superTabControl1.ReorderTabsEnabled = true;
+            this.superTabControl1.SelectedTabFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.superTabControl1.SelectedTabIndex = 0;
+            this.superTabControl1.Size = new System.Drawing.Size(197, 334);
+            this.superTabControl1.TabFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.superTabControl1.TabIndex = 11;
+            this.superTabControl1.Tabs.AddRange(new DevComponents.DotNetBar.BaseItem[] {
+            this.superTabItem1,
+            this.superTabItem2});
+            this.superTabControl1.Text = "效果选择";
+            // 
+            // superTabControlPanel1
+            // 
+            this.superTabControlPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.superTabControlPanel1.Controls.Add(this.comboBoxEx1);
+            this.superTabControlPanel1.Controls.Add(this.checkBoxX1);
+            this.superTabControlPanel1.Controls.Add(this.slider2);
+            this.superTabControlPanel1.Controls.Add(this.label2);
+            this.superTabControlPanel1.Controls.Add(this.label1);
+            this.superTabControlPanel1.Controls.Add(this.switchButton1);
+            this.superTabControlPanel1.Controls.Add(this.slider1);
+            this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 30);
+            this.superTabControlPanel1.Name = "superTabControlPanel1";
+            this.superTabControlPanel1.Size = new System.Drawing.Size(197, 304);
+            this.superTabControlPanel1.TabIndex = 1;
+            this.superTabControlPanel1.TabItem = this.superTabItem1;
+            // 
+            // comboBoxEx1
+            // 
+            this.comboBoxEx1.DisplayMember = "Text";
+            this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxEx1.FormattingEnabled = true;
+            this.comboBoxEx1.ItemHeight = 17;
+            this.comboBoxEx1.Items.AddRange(new object[] {
+            this.comboItem1,
+            this.comboItem2,
+            this.comboItem3});
+            this.comboBoxEx1.Location = new System.Drawing.Point(86, 86);
+            this.comboBoxEx1.Name = "comboBoxEx1";
+            this.comboBoxEx1.Size = new System.Drawing.Size(104, 23);
+            this.comboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comboBoxEx1.TabIndex = 18;
+            this.comboBoxEx1.SelectedIndexChanged += new System.EventHandler(this.comboBoxEx1_SelectedIndexChanged);
+            // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "最近邻插值";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "双线性插值";
+            // 
+            // comboItem3
+            // 
+            this.comboItem3.Text = "双三次样条插值";
+            // 
+            // checkBoxX1
+            // 
+            this.checkBoxX1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.checkBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.checkBoxX1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkBoxX1.Location = new System.Drawing.Point(62, 250);
+            this.checkBoxX1.Name = "checkBoxX1";
+            this.checkBoxX1.Size = new System.Drawing.Size(94, 26);
+            this.checkBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.checkBoxX1.TabIndex = 17;
+            this.checkBoxX1.Text = "动画演示";
+            // 
+            // slider2
+            // 
+            this.slider2.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.slider2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.slider2.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.slider2.LabelWidth = 40;
+            this.slider2.Location = new System.Drawing.Point(8, 196);
+            this.slider2.Maximum = 40;
+            this.slider2.Minimum = 1;
+            this.slider2.Name = "slider2";
+            this.slider2.Size = new System.Drawing.Size(182, 30);
+            this.slider2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.slider2.TabIndex = 14;
+            this.slider2.Text = "范围";
+            this.slider2.Value = 20;
+            this.slider2.ValueChanged += new System.EventHandler(this.slider2_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(6, 86);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 21);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "插值算法";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(4, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 21);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "旋转方向";
+            // 
+            // switchButton1
+            // 
+            // 
+            // 
+            // 
+            this.switchButton1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.switchButton1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.switchButton1.Location = new System.Drawing.Point(86, 33);
+            this.switchButton1.Name = "switchButton1";
+            this.switchButton1.OffText = "顺时针";
+            this.switchButton1.OnText = "逆时针";
+            this.switchButton1.Size = new System.Drawing.Size(104, 30);
+            this.switchButton1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.switchButton1.SwitchWidth = 35;
+            this.switchButton1.TabIndex = 15;
+            this.switchButton1.ValueChanged += new System.EventHandler(this.switchButton1_ValueChanged);
+            // 
+            // slider1
+            // 
+            this.slider1.BackColor = System.Drawing.Color.Transparent;
+            // 
+            // 
+            // 
+            this.slider1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.slider1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.slider1.LabelWidth = 40;
+            this.slider1.Location = new System.Drawing.Point(8, 145);
+            this.slider1.Maximum = 40;
+            this.slider1.Minimum = 1;
+            this.slider1.Name = "slider1";
+            this.slider1.Size = new System.Drawing.Size(182, 30);
+            this.slider1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.slider1.TabIndex = 12;
+            this.slider1.Text = "强度";
+            this.slider1.Value = 20;
+            this.slider1.ValueChanged += new System.EventHandler(this.slider1_ValueChanged);
+            // 
+            // superTabItem1
+            // 
+            this.superTabItem1.AttachedControl = this.superTabControlPanel1;
+            this.superTabItem1.GlobalItem = false;
+            this.superTabItem1.Name = "superTabItem1";
+            this.superTabItem1.Text = "旋转扭曲";
+            // 
+            // superTabControlPanel2
+            // 
+            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 30);
+            this.superTabControlPanel2.Name = "superTabControlPanel2";
+            this.superTabControlPanel2.Size = new System.Drawing.Size(197, 304);
+            this.superTabControlPanel2.TabIndex = 0;
+            this.superTabControlPanel2.TabItem = this.superTabItem2;
+            // 
+            // superTabItem2
+            // 
+            this.superTabItem2.AttachedControl = this.superTabControlPanel2;
+            this.superTabItem2.GlobalItem = false;
+            this.superTabItem2.Name = "superTabItem2";
+            this.superTabItem2.Text = "水波变换";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 550);
+            this.ClientSize = new System.Drawing.Size(764, 550);
+            this.Controls.Add(this.superTabControl1);
             this.Controls.Add(this.buttonX4);
-            this.Controls.Add(this.slider2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBoxEx1);
             this.Controls.Add(this.buttonX3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.switchButton1);
-            this.Controls.Add(this.slider1);
             this.Controls.Add(this.buttonX2);
             this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.pictureBox1);
@@ -281,8 +404,11 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
+            this.superTabControl1.ResumeLayout(false);
+            this.superTabControlPanel1.ResumeLayout(false);
+            this.superTabControlPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -293,19 +419,32 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private DevComponents.DotNetBar.ButtonX buttonX2;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private DevComponents.DotNetBar.Controls.Slider slider1;
-        private DevComponents.DotNetBar.Controls.SwitchButton switchButton1;
-        private System.Windows.Forms.Label label1;
         private DevComponents.DotNetBar.ButtonX buttonX3;
-        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx1;
-        private DevComponents.Editors.ComboItem comboItem0;
-        private DevComponents.Editors.ComboItem comboItem1;
-        private System.Windows.Forms.Label label2;
-        private DevComponents.DotNetBar.Controls.Slider slider2;
         private DevComponents.DotNetBar.ButtonX buttonX4;
         private DevComponents.DotNetBar.CheckBoxItem checkBoxItem1;
         private DevComponents.DotNetBar.CheckBoxItem checkBoxItem2;
         private DevComponents.DotNetBar.CheckBoxItem checkBoxItem3;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timer2;
+        private DevComponents.DotNetBar.CheckBoxItem checkBoxItem4;
+        private DevComponents.DotNetBar.SuperTabControl superTabControl1;
+        private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel1;
+        private DevComponents.DotNetBar.Controls.CheckBoxX checkBoxX1;
+        private DevComponents.DotNetBar.Controls.Slider slider2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private DevComponents.DotNetBar.Controls.SwitchButton switchButton1;
+        private DevComponents.DotNetBar.Controls.Slider slider1;
+        private DevComponents.DotNetBar.SuperTabItem superTabItem1;
+        //private DevComponents.Editors.ComboItem comboItem2;
+        //private DevComponents.Editors.ComboItem comboItem1;
+        //private DevComponents.Editors.ComboItem comboItem0;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx1;
+        private DevComponents.DotNetBar.SuperTabControlPanel superTabControlPanel2;
+        private DevComponents.DotNetBar.SuperTabItem superTabItem2;
+        private DevComponents.Editors.ComboItem comboItem1;
+        private DevComponents.Editors.ComboItem comboItem2;
+        private DevComponents.Editors.ComboItem comboItem3;
     }
 }
 
