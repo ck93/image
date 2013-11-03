@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
@@ -43,40 +42,41 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.superTabControl1 = new DevComponents.DotNetBar.SuperTabControl();
-            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.superTabItem2 = new DevComponents.DotNetBar.SuperTabItem();
             this.superTabControlPanel1 = new DevComponents.DotNetBar.SuperTabControlPanel();
-            this.comboBoxEx1 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
-            this.comboItem1 = new DevComponents.Editors.ComboItem();
-            this.comboItem2 = new DevComponents.Editors.ComboItem();
-            this.comboItem3 = new DevComponents.Editors.ComboItem();
             this.checkBoxX1 = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.slider2 = new DevComponents.DotNetBar.Controls.Slider();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.switchButton1 = new DevComponents.DotNetBar.Controls.SwitchButton();
             this.slider1 = new DevComponents.DotNetBar.Controls.Slider();
             this.superTabItem1 = new DevComponents.DotNetBar.SuperTabItem();
-            this.slider3 = new DevComponents.DotNetBar.Controls.Slider();
+            this.superTabControlPanel2 = new DevComponents.DotNetBar.SuperTabControlPanel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonX5 = new DevComponents.DotNetBar.ButtonX();
+            this.comboBoxEx2 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem4 = new DevComponents.Editors.ComboItem();
+            this.comboItem5 = new DevComponents.Editors.ComboItem();
+            this.comboItem6 = new DevComponents.Editors.ComboItem();
+            this.comboItem7 = new DevComponents.Editors.ComboItem();
+            this.comboItem8 = new DevComponents.Editors.ComboItem();
+            this.slider5 = new DevComponents.DotNetBar.Controls.Slider();
             this.slider4 = new DevComponents.DotNetBar.Controls.Slider();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.superTabItem2 = new DevComponents.DotNetBar.SuperTabItem();
+            this.comboBoxEx1 = new DevComponents.DotNetBar.Controls.ComboBoxEx();
+            this.comboItem1 = new DevComponents.Editors.ComboItem();
+            this.comboItem2 = new DevComponents.Editors.ComboItem();
+            this.comboItem3 = new DevComponents.Editors.ComboItem();
+            this.label2 = new System.Windows.Forms.Label();
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.timer4 = new System.Windows.Forms.Timer(this.components);
+            this.timer5 = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.timer6 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).BeginInit();
             this.superTabControl1.SuspendLayout();
-            this.superTabControlPanel2.SuspendLayout();
             this.superTabControlPanel1.SuspendLayout();
+            this.superTabControlPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Image = global::Image.Properties.Resources.LENA;
-            this.pictureBox1.Location = new System.Drawing.Point(30, 30);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 500);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // buttonX1
             // 
@@ -84,7 +84,7 @@
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX1.Location = new System.Drawing.Point(555, 44);
+            this.buttonX1.Location = new System.Drawing.Point(565, 44);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX1.Size = new System.Drawing.Size(82, 33);
@@ -103,7 +103,7 @@
             this.buttonX2.BackColor = System.Drawing.Color.Transparent;
             this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX2.Location = new System.Drawing.Point(657, 44);
+            this.buttonX2.Location = new System.Drawing.Point(667, 44);
             this.buttonX2.Name = "buttonX2";
             this.buttonX2.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX2.Size = new System.Drawing.Size(82, 33);
@@ -123,7 +123,7 @@
             this.buttonX3.BackColor = System.Drawing.Color.Transparent;
             this.buttonX3.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX3.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX3.Location = new System.Drawing.Point(657, 104);
+            this.buttonX3.Location = new System.Drawing.Point(667, 104);
             this.buttonX3.Name = "buttonX3";
             this.buttonX3.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX3.Size = new System.Drawing.Size(82, 33);
@@ -138,7 +138,7 @@
             this.buttonX4.BackColor = System.Drawing.Color.Transparent;
             this.buttonX4.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.buttonX4.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonX4.Location = new System.Drawing.Point(555, 104);
+            this.buttonX4.Location = new System.Drawing.Point(565, 104);
             this.buttonX4.Name = "buttonX4";
             this.buttonX4.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
             this.buttonX4.Size = new System.Drawing.Size(82, 33);
@@ -187,6 +187,7 @@
             // 
             // timer2
             // 
+            this.timer2.Interval = 50;
             this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // superTabControl1
@@ -210,7 +211,7 @@
             this.superTabControl1.Controls.Add(this.superTabControlPanel2);
             this.superTabControl1.Controls.Add(this.superTabControlPanel1);
             this.superTabControl1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.superTabControl1.Location = new System.Drawing.Point(555, 244);
+            this.superTabControl1.Location = new System.Drawing.Point(565, 244);
             this.superTabControl1.Name = "superTabControl1";
             this.superTabControl1.ReorderTabsEnabled = true;
             this.superTabControl1.SelectedTabFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -222,24 +223,6 @@
             this.superTabItem1,
             this.superTabItem2});
             this.superTabControl1.Text = "效果选择";
-            // 
-            // superTabControlPanel2
-            // 
-            this.superTabControlPanel2.Controls.Add(this.slider3);
-            this.superTabControlPanel2.Controls.Add(this.slider4);
-            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 30);
-            this.superTabControlPanel2.Name = "superTabControlPanel2";
-            this.superTabControlPanel2.Size = new System.Drawing.Size(197, 256);
-            this.superTabControlPanel2.TabIndex = 0;
-            this.superTabControlPanel2.TabItem = this.superTabItem2;
-            // 
-            // superTabItem2
-            // 
-            this.superTabItem2.AttachedControl = this.superTabControlPanel2;
-            this.superTabItem2.GlobalItem = false;
-            this.superTabItem2.Name = "superTabItem2";
-            this.superTabItem2.Text = "水波变换";
             // 
             // superTabControlPanel1
             // 
@@ -256,36 +239,6 @@
             this.superTabControlPanel1.Size = new System.Drawing.Size(197, 256);
             this.superTabControlPanel1.TabIndex = 1;
             this.superTabControlPanel1.TabItem = this.superTabItem1;
-            // 
-            // comboBoxEx1
-            // 
-            this.comboBoxEx1.DisplayMember = "Text";
-            this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.comboBoxEx1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBoxEx1.FormattingEnabled = true;
-            this.comboBoxEx1.ItemHeight = 17;
-            this.comboBoxEx1.Items.AddRange(new object[] {
-            this.comboItem1,
-            this.comboItem2,
-            this.comboItem3});
-            this.comboBoxEx1.Location = new System.Drawing.Point(635, 177);
-            this.comboBoxEx1.Name = "comboBoxEx1";
-            this.comboBoxEx1.Size = new System.Drawing.Size(104, 23);
-            this.comboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.comboBoxEx1.TabIndex = 18;
-            this.comboBoxEx1.SelectedIndexChanged += new System.EventHandler(this.comboBoxEx1_SelectedIndexChanged);
-            // 
-            // comboItem1
-            // 
-            this.comboItem1.Text = "最近邻插值";
-            // 
-            // comboItem2
-            // 
-            this.comboItem2.Text = "双线性插值";
-            // 
-            // comboItem3
-            // 
-            this.comboItem3.Text = "双三次样条插值";
             // 
             // checkBoxX1
             // 
@@ -322,18 +275,6 @@
             this.slider2.Value = 20;
             this.slider2.ValueChanged += new System.EventHandler(this.slider2_ValueChanged);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(555, 177);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 21);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "插值算法";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -357,7 +298,7 @@
             this.switchButton1.Name = "switchButton1";
             this.switchButton1.OffText = "顺时针";
             this.switchButton1.OnText = "逆时针";
-            this.switchButton1.Size = new System.Drawing.Size(104, 30);
+            this.switchButton1.Size = new System.Drawing.Size(97, 30);
             this.switchButton1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.switchButton1.SwitchWidth = 35;
             this.switchButton1.TabIndex = 15;
@@ -390,25 +331,104 @@
             this.superTabItem1.Name = "superTabItem1";
             this.superTabItem1.Text = "旋转扭曲";
             // 
-            // slider3
+            // superTabControlPanel2
             // 
-            this.slider3.BackColor = System.Drawing.Color.Transparent;
+            this.superTabControlPanel2.Controls.Add(this.label3);
+            this.superTabControlPanel2.Controls.Add(this.buttonX5);
+            this.superTabControlPanel2.Controls.Add(this.comboBoxEx2);
+            this.superTabControlPanel2.Controls.Add(this.slider5);
+            this.superTabControlPanel2.Controls.Add(this.slider4);
+            this.superTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.superTabControlPanel2.Location = new System.Drawing.Point(0, 30);
+            this.superTabControlPanel2.Name = "superTabControlPanel2";
+            this.superTabControlPanel2.Size = new System.Drawing.Size(197, 256);
+            this.superTabControlPanel2.TabIndex = 0;
+            this.superTabControlPanel2.TabItem = this.superTabItem2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(12, 27);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 20);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "动画效果";
+            // 
+            // buttonX5
+            // 
+            this.buttonX5.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX5.BackColor = System.Drawing.Color.Transparent;
+            this.buttonX5.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX5.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonX5.Location = new System.Drawing.Point(78, 70);
+            this.buttonX5.Name = "buttonX5";
+            this.buttonX5.Shape = new DevComponents.DotNetBar.RoundRectangleShapeDescriptor(6);
+            this.buttonX5.Size = new System.Drawing.Size(82, 33);
+            this.buttonX5.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX5.TabIndex = 19;
+            this.buttonX5.Text = "停止动画";
+            this.buttonX5.Click += new System.EventHandler(this.buttonX5_Click);
+            // 
+            // comboBoxEx2
+            // 
+            this.comboBoxEx2.DisplayMember = "Text";
+            this.comboBoxEx2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxEx2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEx2.FormattingEnabled = true;
+            this.comboBoxEx2.ItemHeight = 17;
+            this.comboBoxEx2.Items.AddRange(new object[] {
+            this.comboItem4,
+            this.comboItem5,
+            this.comboItem6,
+            this.comboItem7,
+            this.comboItem8});
+            this.comboBoxEx2.Location = new System.Drawing.Point(78, 25);
+            this.comboBoxEx2.Name = "comboBoxEx2";
+            this.comboBoxEx2.Size = new System.Drawing.Size(106, 23);
+            this.comboBoxEx2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comboBoxEx2.TabIndex = 18;
+            this.comboBoxEx2.SelectedIndexChanged += new System.EventHandler(this.comboBoxEx2_SelectedIndexChanged);
+            // 
+            // comboItem4
+            // 
+            this.comboItem4.Text = "无（默认）";
+            // 
+            // comboItem5
+            // 
+            this.comboItem5.Text = "点击起涟漪";
+            // 
+            // comboItem6
+            // 
+            this.comboItem6.Text = "自由投石";
+            // 
+            // comboItem7
+            // 
+            this.comboItem7.Text = "小雨淅沥";
+            // 
+            // comboItem8
+            // 
+            this.comboItem8.Text = "拂过留痕";
+            // 
+            // slider5
+            // 
+            this.slider5.BackColor = System.Drawing.Color.Transparent;
             // 
             // 
             // 
-            this.slider3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.slider3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.slider3.LabelWidth = 40;
-            this.slider3.Location = new System.Drawing.Point(4, 118);
-            this.slider3.Maximum = 50;
-            this.slider3.Minimum = 10;
-            this.slider3.Name = "slider3";
-            this.slider3.Size = new System.Drawing.Size(182, 30);
-            this.slider3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.slider3.TabIndex = 16;
-            this.slider3.Text = "幅度";
-            this.slider3.Value = 30;
-            this.slider3.ValueChanged += new System.EventHandler(this.slider3_ValueChanged);
+            this.slider5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.slider5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.slider5.LabelWidth = 40;
+            this.slider5.Location = new System.Drawing.Point(4, 213);
+            this.slider5.Maximum = 50;
+            this.slider5.Minimum = 10;
+            this.slider5.Name = "slider5";
+            this.slider5.Size = new System.Drawing.Size(182, 30);
+            this.slider5.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.slider5.TabIndex = 17;
+            this.slider5.Text = "范围";
+            this.slider5.Value = 30;
+            this.slider5.ValueChanged += new System.EventHandler(this.slider5_ValueChanged);
             // 
             // slider4
             // 
@@ -427,14 +447,96 @@
             this.slider4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.slider4.TabIndex = 15;
             this.slider4.Text = "波长";
-            this.slider4.Value = 60;
+            this.slider4.Value = 64;
             this.slider4.ValueChanged += new System.EventHandler(this.slider4_ValueChanged);
+            // 
+            // superTabItem2
+            // 
+            this.superTabItem2.AttachedControl = this.superTabControlPanel2;
+            this.superTabItem2.GlobalItem = false;
+            this.superTabItem2.Name = "superTabItem2";
+            this.superTabItem2.Text = "水波变换";
+            // 
+            // comboBoxEx1
+            // 
+            this.comboBoxEx1.DisplayMember = "Text";
+            this.comboBoxEx1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.comboBoxEx1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxEx1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBoxEx1.FormattingEnabled = true;
+            this.comboBoxEx1.ItemHeight = 17;
+            this.comboBoxEx1.Items.AddRange(new object[] {
+            this.comboItem1,
+            this.comboItem2,
+            this.comboItem3});
+            this.comboBoxEx1.Location = new System.Drawing.Point(645, 177);
+            this.comboBoxEx1.Name = "comboBoxEx1";
+            this.comboBoxEx1.Size = new System.Drawing.Size(104, 23);
+            this.comboBoxEx1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.comboBoxEx1.TabIndex = 18;
+            this.comboBoxEx1.SelectedIndexChanged += new System.EventHandler(this.comboBoxEx1_SelectedIndexChanged);
+            // 
+            // comboItem1
+            // 
+            this.comboItem1.Text = "最近邻插值";
+            // 
+            // comboItem2
+            // 
+            this.comboItem2.Text = "双线性插值";
+            // 
+            // comboItem3
+            // 
+            this.comboItem3.Text = "双三次样条插值";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(565, 177);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 21);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "插值算法";
+            // 
+            // timer3
+            // 
+            this.timer3.Interval = 1;
+            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            // 
+            // timer4
+            // 
+            this.timer4.Interval = 10;
+            this.timer4.Tick += new System.EventHandler(this.timer4_Tick);
+            // 
+            // timer5
+            // 
+            this.timer5.Interval = 800;
+            this.timer5.Tick += new System.EventHandler(this.timer5_Tick);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Image = global::Image.Properties.Resources.LENA;
+            this.pictureBox1.Location = new System.Drawing.Point(22, 30);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(512, 512);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            // 
+            // timer6
+            // 
+            this.timer6.Interval = 400;
+            this.timer6.Tick += new System.EventHandler(this.timer6_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 550);
+            this.ClientSize = new System.Drawing.Size(794, 572);
             this.Controls.Add(this.comboBoxEx1);
             this.Controls.Add(this.superTabControl1);
             this.Controls.Add(this.buttonX4);
@@ -449,12 +551,13 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.superTabControl1)).EndInit();
             this.superTabControl1.ResumeLayout(false);
-            this.superTabControlPanel2.ResumeLayout(false);
             this.superTabControlPanel1.ResumeLayout(false);
             this.superTabControlPanel1.PerformLayout();
+            this.superTabControlPanel2.ResumeLayout(false);
+            this.superTabControlPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -493,8 +596,20 @@
         private DevComponents.Editors.ComboItem comboItem1;
         private DevComponents.Editors.ComboItem comboItem2;
         private DevComponents.Editors.ComboItem comboItem3;
-        private DevComponents.DotNetBar.Controls.Slider slider3;
         private DevComponents.DotNetBar.Controls.Slider slider4;
+        private DevComponents.DotNetBar.Controls.Slider slider5;
+        private DevComponents.DotNetBar.Controls.ComboBoxEx comboBoxEx2;
+        private DevComponents.Editors.ComboItem comboItem4;
+        private DevComponents.Editors.ComboItem comboItem5;
+        private System.Windows.Forms.Timer timer3;
+        private DevComponents.DotNetBar.ButtonX buttonX5;
+        private System.Windows.Forms.Label label3;
+        private DevComponents.Editors.ComboItem comboItem6;
+        private System.Windows.Forms.Timer timer4;
+        private DevComponents.Editors.ComboItem comboItem7;
+        private System.Windows.Forms.Timer timer5;
+        private DevComponents.Editors.ComboItem comboItem8;
+        private System.Windows.Forms.Timer timer6;
     }
 }
 
