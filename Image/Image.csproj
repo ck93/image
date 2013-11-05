@@ -48,6 +48,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>漩涡.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevComponents.DotNetBar2, Version=11.4.0.8, Culture=neutral, PublicKeyToken=7eb7c3a35b91de04, processorArchitecture=MSIL" />
     <Reference Include="DevComponents.Instrumentation, Version=11.4.0.8, Culture=neutral, PublicKeyToken=f90dc37c26666a67, processorArchitecture=MSIL" />
@@ -127,6 +130,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\LENA.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\爱心1.jpg" />
+    <None Include="Resources\爱心2.jpg" />
+    <Content Include="扭曲挂钟.ico" />
+    <Content Include="漩涡.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

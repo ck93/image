@@ -66,5 +66,19 @@ namespace Image.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap 爱心1 {
+            get {
+                object obj = ResourceManager.GetObject("爱心1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap 爱心2 {
+            get {
+                object obj = ResourceManager.GetObject("爱心2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

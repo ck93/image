@@ -42,22 +42,25 @@ namespace Image
                     atanTable[i, j] = Math.Atan2(i - 512, j - 512);
                 }
             }
+            sinTable = new double[100000];
+            for (int i = 0; i < 100000; i++)
+            {
+                sinTable[i] = Math.Sin((double)i / 10000);
+            }
             comboBoxEx1.SelectedIndex = 1;
             comboBoxEx2.SelectedIndex = 0;
             drop_phrase = new double[20];
             drop_times = new int[20];
             drop_x = new int[20];
             drop_y = new int[20];
-            /*sinTable = new double[102944];
-            for (int i = 0; i < 102944; i++)
-            {
-                sinTable[i] = Math.Sin((double)(i >> 14));
-            }*/
+            
         }
         Bitmap image;
+        string picPath = null;//记录原始图片路径
         int width = 512;
         int height = 512;
         const double PI = 3.1416;
+        const double TWO_PI = 6.2832;
         Stopwatch sw = new Stopwatch();
         int[,] R;
         int[,] G;
@@ -72,18 +75,18 @@ namespace Image
         int[] drop_times;//记录各雨滴已计算次数
         int[] drop_x;//记录各雨滴x坐标
         int[] drop_y;//记录各雨滴y坐标
+        //int posi = 0;//记录快艇位置
         //double[,] buffer;//上一帧各点的偏移量
         //double[,] current;//当前帧各点的偏移量
         double[,] sqrtTable;//开平方表，用于计算距离
         double[] sqrtTable2;//开平方表，存储1到49的开方
         double[,] atanTable;//反正切表
-        //double[] sinTable;
+        double[] sinTable;
         void GetRGB()//读取图片，数据存储到三个矩阵
         {
             Rectangle rect = new Rectangle(0, 0, width, height);
             BitmapData bmpData = image.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
             IntPtr iPtr = bmpData.Scan0;
-            //int iBytes = width * height * 3;
             int iBytes = bmpData.Stride * height;
             byte[] PixelValues = new byte[iBytes];
             System.Runtime.InteropServices.Marshal.Copy(iPtr, PixelValues, 0, iBytes);
@@ -103,6 +106,7 @@ namespace Image
                     R[i, j] = Convert.ToInt32(PixelValues[iPoint++]);
                 }
             }
+            label5.Text = width.ToString() + "×" + height.ToString();
         }
 
         Bitmap FromRGB(int[,] R, int[,] G, int[,] B)//由矩阵信息还原图片
@@ -127,23 +131,6 @@ namespace Image
             System.Runtime.InteropServices.Marshal.Copy(PixelValues, 0, iPtr, iBytes);
             Result.UnlockBits(bmpData);
             return Result;
-        }
-        double[] rotate(int center_x, int center_y, int x, int y, int strengh, int scale, int limit)//变换后图像中某点对应原来图像中的位置
-        {           
-            double[] site = new double[2];
-            //double r = Math.Sqrt((center_x - x) * (center_x - x) + (center_y - y) * (center_y - y));
-            //double angle = Math.Atan2((double)(y - center_y), (double)(x - center_x));            
-            //double delta = Math.Max(limit - (int)(Math.Sqrt(48 - scale) * (int)r / 4), 0) / (double)limit; 
-            double r = sqrtTable[center_x - x + 512, center_y - y + 512];
-            double angle = atanTable[y - center_y + 512, x - center_x + 512];
-            double delta = Math.Max(limit - (int)(sqrtTable2[48 - scale] * (int)r / 4), 0) / (double)limit; 
-            if (switchButton1.Value == true)
-                angle -= strengh * delta * delta * delta / 10;               
-            else
-                angle += strengh * delta * delta * delta / 10;               
-            site[0] = center_x + r * Math.Cos(angle);
-            site[1] = center_y + r * Math.Sin(angle);
-            return site;
         }
         int Nearest(int[,] color, double[] site)//最近邻插值
         {  
@@ -240,8 +227,8 @@ namespace Image
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string pic = openFileDialog1.FileName;
-                image = new Bitmap(pic);
+                picPath = openFileDialog1.FileName;
+                image = new Bitmap(picPath);
                 if (image == null)
                 {
                     MessageBox.Show("图片加载失败！", "错误");
@@ -250,8 +237,7 @@ namespace Image
                 width = image.Width;
                 height = image.Height;
                 GetRGB();
-                pictureBox1.Image = FromRGB(R, G, B);
-                
+                pictureBox1.Image = FromRGB(R, G, B);              
             }
         }
 
@@ -274,6 +260,24 @@ namespace Image
             if (width - y < limit)
                 limit = width - y;
             return limit;
+        }
+        double[] rotate(int center_x, int center_y, int x, int y, int strengh, int scale, int limit)//变换后图像中某点对应原来图像中的位置
+        {
+            double[] site = new double[2];
+            //double r = Math.Sqrt((center_x - x) * (center_x - x) + (center_y - y) * (center_y - y));
+            //double angle = Math.Atan2((double)(y - center_y), (double)(x - center_x));            
+            //double delta = Math.Max(limit - (int)(Math.Sqrt(48 - scale) * (int)r / 4), 0) / (double)limit; 
+            double r = sqrtTable[center_x - x + 512, center_y - y + 512];
+            double angle = atanTable[y - center_y + 512, x - center_x + 512];
+            double delta = Math.Max(limit - (int)(sqrtTable2[48 - scale] * (int)r / 4), 0) / (double)limit;
+            if (switchButton1.Value == true)
+                angle -= strengh * delta * delta * delta / 10;
+            else
+                angle += strengh * delta * delta * delta / 10;
+            site[0] = center_x + r * Math.Cos(angle);
+            //site[1] = center_y + r * Math.Sin(angle);
+            site[1] = center_y - r * sinTable[(int)(10000 * (angle + PI))];
+            return site;
         }
         Bitmap twist(int x, int y, int method, int strengh, int scale)
         {
@@ -425,10 +429,15 @@ namespace Image
         }
         double[] Ripple(int x, int y, int dx, int dy, int limit, double phrase, int wavelength) 
         {           
-            double[] site = new double[2];            
+            double[] site = new double[2];
+            sw.Start();
             double r = sqrtTable[dx + 512, dy + 512];            
             // 计算该点振幅
-            double amount = wavelength * Math.Sin(2 * PI * r / wavelength + PI + phrase) / 4;
+            sw.Stop();
+            double amount = wavelength * Math.Sin(TWO_PI * r / wavelength + PI + phrase) / 4;
+            //int temp = (int)((TWO_PI * r / wavelength + PI + phrase) * 10000) % 62832;
+            //double amount = wavelength * sinTable[temp] / 4;
+            
             //double amount = wavelength * sinTable[(int)((2 * PI * r / wavelength + PI + phrase) % (2 * PI) * 16384)] / 4;
             // 计算衰减
             if (attenuation)
@@ -436,9 +445,11 @@ namespace Image
                 double delta = (limit - r) / limit;
                 amount = amount * Math.Sqrt(delta);
             }
-            // 得到偏移位置              
+            // 得到偏移位置    
+            
             site[0] = x + dx * amount / r;  
-            site[1] = y + dy * amount / r;            
+            site[1] = y + dy * amount / r;
+            
             return site;
         }
         Bitmap wave(int x, int y, int method, double phrase, int wavelength)
@@ -506,12 +517,12 @@ namespace Image
                                 
                                 if (site[1] > -0.5 && site[1] < width - 1.5 && site[0] > -0.5 && site[0] < height - 1.5)
                                 {
-                                    //sw.Start();
+                                    
                                     //newR[i, j] = Biliner(R, site);
                                     //newG[i, j] = Biliner(G, site);
                                     //newB[i, j] = Biliner(B, site);
                                     Biliner(R, G, B, newR, newG, newB, i, j, site);
-                                    //sw.Stop();
+                                    
                                 }
                                 else
                                 {
@@ -608,17 +619,19 @@ namespace Image
                     timer6.Start();
                 }
             }
-            /*string str1 = sw.ElapsedMilliseconds.ToString();
+            string str1 = sw.ElapsedMilliseconds.ToString();
             FileStream fs = new FileStream(@"d:\1.txt", FileMode.Append, FileAccess.Write);
             StreamWriter stw = new StreamWriter(fs);
             stw.WriteLine(str1);
             stw.Close();
             fs.Close();
-            sw.Reset();*/
+            sw.Reset();
         }
 
         private void slider1_ValueChanged(object sender, EventArgs e)
         {
+            if (click_x == 0 && click_y == 0)
+                return;
             if (!checkBoxX1.Checked)
                 pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
             else
@@ -647,6 +660,8 @@ namespace Image
 
         private void slider2_ValueChanged(object sender, EventArgs e)
         {
+            if (click_x == 0 && click_y == 0)
+                return;
             if (!checkBoxX1.Checked)
                 pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
             else
@@ -664,17 +679,52 @@ namespace Image
 
         private void buttonX4_Click(object sender, EventArgs e)
         {
-            Bitmap near = twist(click_x, click_y, 0, slider1.Value, slider2.Value);
-            near.Save("near.bmp");
-            Bitmap liner = twist(click_x, click_y, 1, slider1.Value, slider2.Value);
-            liner.Save("liner.bmp");
-            Bitmap cubic = twist(click_x, click_y, 1, slider1.Value, slider2.Value);
+            if (click_x == 0 && click_y == 0)
+            {
+                MessageBox.Show("请先点击扭曲中心");
+                return;
+            }
+            Bitmap near, liner, cubic;
+            if (superTabItem1.IsSelected)
+            {
+                near = twist(click_x, click_y, 0, slider1.Value, slider2.Value);
+                liner = twist(click_x, click_y, 1, slider1.Value, slider2.Value);
+                cubic = twist(click_x, click_y, 2, slider1.Value, slider2.Value);
+            }
+            else
+            {
+                near = wave(click_x, click_y, 0, 0, slider4.Value);
+                liner = wave(click_x, click_y, 1, 0, slider4.Value);
+                cubic = wave(click_x, click_y, 2, 0, slider4.Value);
+            }
+            near.Save("near.bmp");            
+            liner.Save("liner.bmp");            
             liner.Save("cubic.bmp");
             Form2 f2 = new Form2();
             f2.origin = checkBoxItem1.Checked;
             f2.near = checkBoxItem2.Checked;
             f2.liner = checkBoxItem3.Checked;
             f2.cubic = checkBoxItem4.Checked;
+            f2.originPicPath = picPath;
+            int selectedNum = 0;
+            if (f2.origin)
+                selectedNum++;
+            if (f2.near)
+                selectedNum++;
+            if (f2.liner)
+                selectedNum++;
+            if (f2.cubic)
+                selectedNum++;
+            if (selectedNum < 2)
+            {
+                MessageBox.Show("请选择2个需要对比的项目");
+                return;
+            }
+            else if (selectedNum > 2)
+            {
+                MessageBox.Show("选择的项目过多，只能2个需要对比的项目");
+                return;
+            }
             f2.ShowDialog();
         }
 
@@ -704,11 +754,11 @@ namespace Image
 
         private void comboBoxEx1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (superTabControl1.SelectedTab == superTabItem1)
-                pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
-            else
-                pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, 0, slider4.Value);
-            pictureBox1.Update();
+            //if (superTabControl1.SelectedTab == superTabItem1)
+            //    pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
+            //else
+            //    pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, 0, slider4.Value);
+            //pictureBox1.Update();
         }
 
         private void slider4_ValueChanged(object sender, EventArgs e)
@@ -745,6 +795,10 @@ namespace Image
             }
             pictureBox1.Image = RainDrop();
             pictureBox1.Update();
+            //Graphics g = pictureBox1.CreateGraphics();
+            //Bitmap ship = Properties.Resources.快艇;
+            //g.DrawImage(ship, posi * 3, 250);
+            //posi++;
         }
 
         private void comboBoxEx2_SelectedIndexChanged(object sender, EventArgs e)
@@ -755,21 +809,31 @@ namespace Image
                     timer3.Dispose();
                     timer4.Dispose();
                     timer5.Dispose();
+                    timer6.Dispose();
                     drops = 0;
                     break;
                 case 1:
                     timer4.Dispose();
                     timer5.Dispose();
+                    timer6.Dispose();
                     drops = 0;
                     break;
                 case 2:
                     timer3.Dispose();
                     timer5.Dispose();
+                    timer6.Dispose();
                     drops = 0;
                     break;
                 case 3:
                     timer3.Dispose();
                     timer4.Dispose();
+                    timer6.Dispose();
+                    drops = 0;
+                    break;
+                case 4:
+                    timer3.Dispose();
+                    timer4.Dispose();
+                    timer5.Dispose();
                     drops = 0;
                     break;
             }
@@ -796,7 +860,7 @@ namespace Image
             drop_times[drops] = 0;
             drops++;
             if (drops == 20)
-                timer6.Stop();
+                timer6.Stop();            
         }
 
     }
