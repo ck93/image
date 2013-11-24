@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.IO;
 
 namespace Image
 {
@@ -88,8 +88,9 @@ namespace Image
         {
             pictureBox1.Image.Dispose();
             pictureBox2.Image.Dispose();
+            File.Delete("near.bmp");
+            File.Delete("liner.bmp");
+            File.Delete("cubic.bmp");
         }
-
-
     }
 }

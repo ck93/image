@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.Threading;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Image
 {
@@ -21,39 +22,63 @@ namespace Image
             image = Properties.Resources.LENA;
             GetRGB();            
             sqrtTable = new double[1024,1024];
-            for (int i = 0; i < 1024; i++)
+            atanTable = new double[1024, 1024];
+            deltaxTable = new double[1024, 1024, 32];
+            deltayTable = new double[1024, 1024, 32];
+            sinTable = new double[200000];
+            cosTable = new double[200000];
+            sqrtTable2 = new double[50];
+            sw.Start();          
+            Parallel.For(0, 1024, (i) =>
             {
                 int i2 = (i - 512) * (i - 512);
                 for (int j = 0; j < 1024; j++)
                 {
                     sqrtTable[i, j] = Math.Sqrt(i2 + (j - 512) * (j - 512));
+                    atanTable[i, j] = Math.Atan2(i - 512, j - 512);
                 }
-            }
-            sqrtTable2 = new double[50];
+            });            
+            Parallel.For(0, 200000, (i) =>
+            {
+                sinTable[i] = Math.Sin((double)i / 10000);
+                cosTable[i] = Math.Cos((double)i / 10000);            
+            });
+            sw.Stop();
             for (int i = 0; i < 50; i++)
             {
                 sqrtTable2[i] = Math.Sqrt(i);
             }
-            atanTable = new double[1024, 1024];
-            for (int i = 0; i < 1024; i++)
+            string str1 = sw.ElapsedMilliseconds.ToString();
+            FileStream fs = new FileStream(@"d:\1.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter stw = new StreamWriter(fs);
+            stw.WriteLine(str1);
+            stw.Close();
+            fs.Close();
+            sw.Reset();
+            /*Parallel.For(0, 1024, (i) =>
             {
                 for (int j = 0; j < 1024; j++)
                 {
-                    atanTable[i, j] = Math.Atan2(i - 512, j - 512);
+                    for (int k = 0; k < 32; k++)
+                    {
+                        double r = sqrtTable[i, j];
+                        double amount = 30 * Math.Sin(2 * PI * r / 30 + PI - k * PI / 16) / 4;
+                        deltaxTable[i, j, k] = (i - 512) * amount / r;
+                        deltayTable[i, j, k] = (j - 512) * amount / r;
+                    }
                 }
-            }
-            sinTable = new double[100000];
-            for (int i = 0; i < 100000; i++)
-            {
-                sinTable[i] = Math.Sin((double)i / 10000);
-            }
+            });*/
+            
+            cpuWatch = new System.Diagnostics.PerformanceCounter("Processor", "% Processor Time", "_Total");
+            displayCpu = new Thread(new ThreadStart(RefreshCpu));
+            displayCpu.IsBackground = true;
+            displayCpu.Start();
             comboBoxEx1.SelectedIndex = 1;
             comboBoxEx2.SelectedIndex = 0;
             drop_phrase = new double[20];
             drop_times = new int[20];
             drop_x = new int[20];
             drop_y = new int[20];
-            
         }
         Bitmap image;
         string picPath = null;//记录原始图片路径
@@ -68,6 +93,7 @@ namespace Image
         int click_x = 0;//鼠标点击位置的x坐标
         int click_y = 0;//鼠标点击位置的y坐标
         int frame = 0;//帧数
+        int fps = 0;//水波动画中的帧率
         double phrase = 0;//相位
         bool attenuation;//是否衰减（无动画效果时衰减，点击起涟漪不衰减）
         int drops = 0;//雨滴数
@@ -75,13 +101,15 @@ namespace Image
         int[] drop_times;//记录各雨滴已计算次数
         int[] drop_x;//记录各雨滴x坐标
         int[] drop_y;//记录各雨滴y坐标
-        //int posi = 0;//记录快艇位置
-        //double[,] buffer;//上一帧各点的偏移量
-        //double[,] current;//当前帧各点的偏移量
         double[,] sqrtTable;//开平方表，用于计算距离
         double[] sqrtTable2;//开平方表，存储1到49的开方
         double[,] atanTable;//反正切表
-        double[] sinTable;
+        double[] sinTable;//正弦表
+        double[] cosTable;//余弦表
+        double[, ,] deltaxTable;//x方向偏移表
+        double[, ,] deltayTable;//y方向偏移表
+        System.Diagnostics.PerformanceCounter cpuWatch;
+        Thread displayCpu;
         void GetRGB()//读取图片，数据存储到三个矩阵
         {
             Rectangle rect = new Rectangle(0, 0, width, height);
@@ -120,9 +148,9 @@ namespace Image
             int iPoint = 0;
             for (int i = 0; i < height; i++)
             {
-                iPoint = i * bmpData.Stride;
+                iPoint = i * bmpData.Stride;                
                 for (int j = 0; j < width; j++)
-                {                    
+                {
                     PixelValues[iPoint++] = Convert.ToByte(B[i, j]);
                     PixelValues[iPoint++] = Convert.ToByte(G[i, j]);
                     PixelValues[iPoint++] = Convert.ToByte(R[i, j]);
@@ -171,11 +199,12 @@ namespace Image
             //int x0 = (int)((site[0] - x) * 512);
             double x0 = (site[0] - x);
             double x02 = x0 * x0;
-            double temp = 0;
-            temp += color[x - 1, y + row] * (-0.5 + x0 - 0.5 * x02) * x0;
-            temp += color[x, y + row] * (1 + (1.5 * x0 - 2.5) * x02);
-            temp += color[x + 1, y + row] * (0.5 * x0 + (2 - 1.5 * x0) * x02);
-            temp += color[x + 2, y + row] * (0.5 * x0 - 0.5) * x02;
+            //double temp = 0;
+            //temp += color[x - 1, y + row] * (-0.5 + x0 - 0.5 * x02) * x0;
+            //temp += color[x, y + row] * (1 + (1.5 * x0 - 2.5) * x02);
+            //temp += color[x + 1, y + row] * (0.5 * x0 + (2 - 1.5 * x0) * x02);
+            //temp += color[x + 2, y + row] * (0.5 * x0 - 0.5) * x02;
+            double temp = color[x - 1, y + row] * (-0.5 + x0 - 0.5 * x02) * x0 + color[x, y + row] * (1 + (1.5 * x0 - 2.5) * x02) + color[x + 1, y + row] * (0.5 * x0 + (2 - 1.5 * x0) * x02) + color[x + 2, y + row] * (0.5 * x0 - 0.5) * x02;
             //temp += color[x, y + row];
             //temp += (color[x + 1, y + row] - color[x - 1, y + row]) * 0.5 * x0;
             //temp += (color[x - 1, y + row] - 2.5 * color[x, y + row] + 2 * color[x + 1, y + row] - 0.5 * color[x + 2, y + row]) * x02;
@@ -217,11 +246,11 @@ namespace Image
             //result += f2 * (0.5 * y0 + (2 - 1.5 * y0) * y02);
             //result += f3 * (0.5 * y0 - 0.5) * y02;
             if (result < 0)
-                result = 0;
+                return 0;
             if (result > 255)
-                result = 255;
+                return 255;
             //sw.Stop();
-            return Convert.ToInt16(result);
+            return (int)(result + 0.5);
         }
         private void buttonX1_Click(object sender, EventArgs e)
         {
@@ -275,8 +304,9 @@ namespace Image
             else
                 angle += strengh * delta * delta * delta / 10;
             site[0] = center_x + r * Math.Cos(angle);
-            //site[1] = center_y + r * Math.Sin(angle);
-            site[1] = center_y - r * sinTable[(int)(10000 * (angle + PI))];
+            site[1] = center_y + r * Math.Sin(angle);
+            //site[0] = center_x - r * cosTable[(int)(10000 * (angle + 3 * PI))];
+            //site[1] = center_y - r * sinTable[(int)(10000 * (angle + 3 * PI))];
             return site;
         }
         Bitmap twist(int x, int y, int method, int strengh, int scale)
@@ -359,15 +389,17 @@ namespace Image
         }
         Bitmap RainDrop()
         {
+            
             int[,] newR = new int[height, width];
             int[,] newG = new int[height, width];
             int[,] newB = new int[height, width];
-            int dx, dy, r2;
+            int dx, dy;
+            double r;
             int wavelength = 30;
             double[] delta_x = new double[20];
             double[] delta_y = new double[20];
             int[] limit = new int[20];            
-            if (drop_times[0] > 149)
+            if (drop_times[0] > 149 && drops > 0)
             {
                 drops--;
                 if (drops == 0)
@@ -381,28 +413,32 @@ namespace Image
                 }
             }
             for (int i = 0; i < drops; i++)
-                limit[i] = -(int)(drop_phrase[i] * wavelength / (2 * PI));
+                limit[i] = -(int)(drop_phrase[i] * wavelength / TWO_PI);
             for (int i = 0; i < height; i++)
+            {
                 for (int j = 0; j < width; j++)
-                {                    
-                    for(int k = 0; k < drops; k++)
+                {
+                    for (int k = 0; k < drops; k++)
                     {
                         dx = i - drop_x[k];
                         dy = j - drop_y[k];
-                        r2 = dx * dx + dy * dy;                        
-                        if (r2 > limit[k] * limit[k])
+                        r = sqrtTable[dx + 512, dy + 512];
+                        //sw.Start();
+                        if (r > limit[k])
                         {
                             delta_x[k] = 0;
                             delta_y[k] = 0;
                         }
                         else
                         {
-                            double r = sqrtTable[dx + 512, dy + 512];
                             double amount = wavelength * Math.Sin(2 * PI * r / wavelength + PI + drop_phrase[k]) / 4;
                             amount -= amount * drop_times[k] / 150;
                             delta_x[k] = dx * amount / r;
                             delta_y[k] = dy * amount / r;
+                            //delta_x[k] = deltaxTable[dx + 512, dy + 512, drop_times[k] % 32] * (150 - drop_times[k]) / 150;
+                            //delta_y[k] = deltayTable[dx + 512, dy + 512, drop_times[k] % 32] * (150 - drop_times[k]) / 150;
                         }
+                        //sw.Stop();
                     }
                     double[] site = new double[2];
                     site[0] = i;
@@ -422,18 +458,26 @@ namespace Image
                         newG[i, j] = G[i, j];
                         newB[i, j] = B[i, j];
                     }
-                    
+
                 }
+            }
             Bitmap newpic = FromRGB(newR, newG, newB);
+            
+            /*string str1 = sw.ElapsedMilliseconds.ToString();
+            FileStream fs = new FileStream(@"d:\1.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter stw = new StreamWriter(fs);
+            stw.WriteLine(str1);
+            stw.Close();
+            fs.Close();
+            sw.Reset();*/
             return newpic;
         }
         double[] Ripple(int x, int y, int dx, int dy, int limit, double phrase, int wavelength) 
         {           
             double[] site = new double[2];
-            sw.Start();
             double r = sqrtTable[dx + 512, dy + 512];            
             // 计算该点振幅
-            sw.Stop();
+            
             double amount = wavelength * Math.Sin(TWO_PI * r / wavelength + PI + phrase) / 4;
             //int temp = (int)((TWO_PI * r / wavelength + PI + phrase) * 10000) % 62832;
             //double amount = wavelength * sinTable[temp] / 4;
@@ -445,11 +489,9 @@ namespace Image
                 double delta = (limit - r) / limit;
                 amount = amount * Math.Sqrt(delta);
             }
-            // 得到偏移位置    
-            
+            // 得到偏移位置               
             site[0] = x + dx * amount / r;  
             site[1] = y + dy * amount / r;
-            
             return site;
         }
         Bitmap wave(int x, int y, int method, double phrase, int wavelength)
@@ -584,14 +626,23 @@ namespace Image
             click_x = x;
             click_y = y;
             if (superTabControl1.SelectedTab == superTabItem1)
+            {
+                timer7.Dispose();
                 pictureBox1.Image = twist(x, y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);
+            }
             else
             {
                 phrase = 0;
                 if (comboBoxEx2.SelectedIndex == 0)
-                    pictureBox1.Image = wave(x, y, comboBoxEx1.SelectedIndex, 0, slider4.Value);
+                {
+                    timer7.Dispose();
+                    pictureBox1.Image = wave(x, y, comboBoxEx1.SelectedIndex, 0, slider4.Value);                    
+                }
                 else if (comboBoxEx2.SelectedIndex == 1)
+                {
+                    timer7.Start();
                     timer3.Start();
+                }
                 else if (comboBoxEx2.SelectedIndex == 2)
                 {
                     drops %= 10;
@@ -599,7 +650,8 @@ namespace Image
                     drop_times[drops] = 0;
                     drop_x[drops] = x;
                     drop_y[drops] = y;
-                    drops++;                    
+                    drops++;
+                    timer7.Start();
                     timer4.Start();
                 }
                 else if (comboBoxEx2.SelectedIndex == 3)
@@ -610,22 +662,20 @@ namespace Image
                     drop_y[0] = ro.Next(10, width - 10);
                     drop_phrase[0] = 0;
                     drop_times[0] = 0;
+                    timer7.Start();
                     timer4.Start();
                     timer5.Start();
                 }
                 else if (comboBoxEx2.SelectedIndex == 4)
                 {
+                    if (drops != 0)
+                        return;
+                    timer7.Start();
                     timer4.Start();
                     timer6.Start();
                 }
             }
-            string str1 = sw.ElapsedMilliseconds.ToString();
-            FileStream fs = new FileStream(@"d:\1.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter stw = new StreamWriter(fs);
-            stw.WriteLine(str1);
-            stw.Close();
-            fs.Close();
-            sw.Reset();
+            
         }
 
         private void slider1_ValueChanged(object sender, EventArgs e)
@@ -649,6 +699,8 @@ namespace Image
 
         private void switchButton1_ValueChanged(object sender, EventArgs e)
         {
+            if ((click_x == 0 && click_y == 0) || superTabItem2.IsSelected)
+                return;
             pictureBox1.Image = twist(click_x, click_y, comboBoxEx1.SelectedIndex, slider1.Value, slider2.Value);            
         }
 
@@ -763,11 +815,15 @@ namespace Image
 
         private void slider4_ValueChanged(object sender, EventArgs e)
         {
+            if (click_x == 0 && click_y == 0)
+                return;
             pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, 0, slider4.Value);
         }
 
         private void slider5_ValueChanged(object sender, EventArgs e)
         {
+            if (click_x == 0 && click_y == 0)
+                return;
             pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, 0, slider4.Value);
         }
 
@@ -776,13 +832,15 @@ namespace Image
             phrase -= PI / 20;
             pictureBox1.Image = wave(click_x, click_y, comboBoxEx1.SelectedIndex, phrase, slider4.Value);
             pictureBox1.Update();
+            fps++;
         }
 
         private void buttonX5_Click(object sender, EventArgs e)
         {
-            timer3.Stop();
-            timer4.Stop();
-            timer5.Stop();
+            timer3.Dispose();
+            timer4.Dispose();
+            timer5.Dispose();
+            timer6.Dispose();
             drops = 0;
         }
 
@@ -795,6 +853,7 @@ namespace Image
             }
             pictureBox1.Image = RainDrop();
             pictureBox1.Update();
+            fps++;
             //Graphics g = pictureBox1.CreateGraphics();
             //Bitmap ship = Properties.Resources.快艇;
             //g.DrawImage(ship, posi * 3, 250);
@@ -810,7 +869,9 @@ namespace Image
                     timer4.Dispose();
                     timer5.Dispose();
                     timer6.Dispose();
+                    timer7.Dispose();
                     drops = 0;
+                    label8.Text = "0";
                     break;
                 case 1:
                     timer4.Dispose();
@@ -862,6 +923,26 @@ namespace Image
             if (drops == 20)
                 timer6.Stop();            
         }
+        private void timer7_Tick(object sender, EventArgs e)
+        {
+            label8.Text = fps.ToString();            
+            fps = 0;
+        }
+        delegate void updatelable();
+        private void RefreshCpu()
+        {
+            updatelable updatelable9 = delegate()
+            {
+                label9.Text = ((int)cpuWatch.NextValue()).ToString();              
+            };
+            while (true)
+            {
+                if (label9.InvokeRequired)
+                    label9.Invoke(updatelable9);
+                Thread.Sleep(1000);
+            }
+        }
+
 
     }
 }
